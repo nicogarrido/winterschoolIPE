@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escuela de Invierno · IPE UNAB</title>
+<meta name="description" content="Material de las asignaturas de la Escuela de Invierno del Instituto de Economía Política, Universidad Andrés Bello.">
+<script>
+  /* =======================================================================
+     CONFIGURACIÓN
+     -----------------------------------------------------------------------
+     Normalmente NO necesitas tocar nada aquí: el sitio detecta solo tu
+     usuario y repositorio de GitHub cuando está publicado en GitHub Pages.
+     Solo cambia REPO_MANUAL si usas un dominio propio (custom domain).
+     ======================================================================= */
+  window.CONFIG = {
+    // Déjalo en null para detección automática. Si usas dominio propio,
+    // pon: { owner: "tu-usuario", repo: "tu-repo" }
+    REPO_MANUAL: null,
+    BRANCH: "main",
+    YEAR: 2026,
+    COURSES: [
+      {
+        id: "microeconometria",
+        name: "Microeconometría",
+        path: "material/microeconometria",
+        desc: "Métodos econométricos para datos de individuos, hogares y firmas: identificación causal, datos de panel y microdatos."
+      },
+      {
+        id: "macroeconometria",
+        name: "Macroeconometría",
+        path: "material/macroeconometria",
+        desc: "Series de tiempo y modelos macroeconométricos: VAR, cointegración, pronóstico y análisis de política."
+      }
+    ]
+  };
+</script>
+<style>
+  :root{
+    --navy:#0a2540;
+    --navy-2:#123a63;
+    --blue:#1b5fb0;
+    --blue-soft:#e8f0fb;
+    --ink:#1a2433;
+    --muted:#5b6b80;
+    --line:#e4e9f0;
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,36,64,.06), 0 8px 24px rgba(16,36,64,.06);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--font);
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* Header */
+  header.site{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+    color:#fff;
+    padding:38px 20px 46px;
+  }
+  .wrap{max-width:960px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:14px;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:#b9cbe4;font-weight:600}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:#3f86e0;box-shadow:0 0 0 4px rgba(63,134,224,.25)}
+  header.site h1{
+    margin:16px 0 6px;
+    font-size:2.15rem;
+    line-height:1.15;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  header.site .sub{color:#cdddf1;max-width:620px;font-size:1.02rem}
+  header.site .year{
+    display:inline-block;margin-top:16px;padding:5px 13px;border-radius:999px;
+    background:rgba(255,255,255,.12);color:#eaf2fc;font-size:.85rem;font-weight:600;
+    border:1px solid rgba(255,255,255,.16);
+  }
+
+  /* Toolbar */
+  .toolbar{max-width:960px;margin:26px auto 0;padding:0 20px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .search{
+    flex:1;min-width:220px;display:flex;align-items:center;gap:10px;background:var(--card);
+    border:1px solid var(--line);border-radius:999px;padding:10px 16px;box-shadow:var(--shadow);
+  }
+  .search input{border:0;outline:0;font-size:.98rem;width:100%;background:transparent;color:var(--ink);font-family:var(--font)}
+  .search svg{flex:none;color:var(--muted)}
+
+  /* Course cards */
+  main{max-width:960px;margin:0 auto;padding:26px 20px 60px}
+  .course{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden;
+  }
+  .course > .head{padding:22px 24px 18px;border-bottom:1px solid var(--line)}
+  .course .tag{
+    display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--blue);background:var(--blue-soft);padding:4px 10px;border-radius:6px;margin-bottom:10px;
+  }
+  .course h2{margin:0 0 6px;font-size:1.4rem;letter-spacing:-.01em}
+  .course .desc{margin:0;color:var(--muted);font-size:.97rem;max-width:640px}
+  .course .count{float:right;color:var(--muted);font-size:.85rem;font-weight:600;margin-top:2px}
+
+  /* File list */
+  ul.files{list-style:none;margin:0;padding:6px 0}
+  ul.files li{
+    display:flex;align-items:center;gap:14px;padding:12px 24px;border-top:1px solid var(--line);
+  }
+  ul.files li:first-child{border-top:0}
+  ul.files li:hover{background:#fafcff}
+  .fic{
+    flex:none;width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:.66rem;font-weight:800;color:#fff;letter-spacing:.02em;
+  }
+  .finfo{flex:1;min-width:0}
+  .fname{font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fmeta{font-size:.82rem;color:var(--muted)}
+  .dl{
+    flex:none;display:inline-flex;align-items:center;gap:7px;background:var(--navy);color:#fff;
+    padding:8px 15px;border-radius:9px;font-size:.86rem;font-weight:600;transition:background .15s;
+  }
+  .dl:hover{background:var(--blue);text-decoration:none}
+  .dl svg{width:15px;height:15px}
+
+  /* States */
+  .state{padding:26px 24px;color:var(--muted);font-size:.95rem}
+  .state.empty{display:flex;gap:12px;align-items:flex-start}
+  .state.empty .emoji{font-size:1.3rem;line-height:1}
+  .state.error{color:#a3341f;background:#fdf1ee;border-top:1px solid #f6d9d1;margin:0}
+  .spinner{
+    width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--blue);
+    border-radius:50%;display:inline-block;vertical-align:-4px;margin-right:9px;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  footer.site{border-top:1px solid var(--line);color:var(--muted);font-size:.86rem;padding:26px 20px 40px;text-align:center}
+  footer.site a{color:var(--muted);text-decoration:underline}
+  .hidden{display:none !important}
+
+  @media(max-width:560px){
+    header.site h1{font-size:1.7rem}
+    ul.files li{flex-wrap:wrap}
+    .dl{margin-left:52px}
+    .course .count{float:none;display:block;margin-top:8px}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>Instituto de Economía Política · Universidad Andrés Bello</div>
+    <h1>Escuela de Invierno</h1>
+    <p class="sub">Material de descarga para las asignaturas del programa. Selecciona tu curso y descarga los archivos disponibles.</p>
+    <span class="year" id="yearBadge">Edición 2026</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <label class="search">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="search" type="search" placeholder="Buscar un archivo por nombre…" autocomplete="off">
+  </label>
+</div>
+
+<main id="courses"><!-- cursos inyectados por JS --></main>
+
+<footer class="site">
+  <div class="wrap">
+    Instituto de Economía Política — Universidad Andrés Bello ·
+    <a id="repoLink" href="#" target="_blank" rel="noopener">Repositorio del material</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const C = window.CONFIG;
+  document.getElementById("yearBadge").textContent = "Edición " + C.YEAR;
+
+  /* --- Detectar usuario/repo automáticamente --- */
+  function resolveRepo(){
+    if (C.REPO_MANUAL && C.REPO_MANUAL.owner && C.REPO_MANUAL.repo) return C.REPO_MANUAL;
+    const host = location.hostname;              // ej: usuario.github.io
+    if (host.endsWith("github.io")){
+      const owner = host.split(".")[0];
+      const parts = location.pathname.split("/").filter(Boolean);
+      const repo = parts.length ? parts[0] : host; // project site vs user site
+      return { owner, repo };
+    }
+    return null; // entorno local / desconocido
+  }
+  const REPO = resolveRepo();
+
+  const repoLink = document.getElementById("repoLink");
+  if (REPO) repoLink.href = "https://github.com/" + REPO.owner + "/" + REPO.repo;
+
+  /* --- Utilidades --- */
+  function fmtSize(b){
+    if (b == null) return "";
+    if (b < 1024) return b + " B";
+    if (b < 1048576) return (b/1024).toFixed(0) + " KB";
+    return (b/1048576).toFixed(1) + " MB";
+  }
+  const COLORS = {
+    pdf:"#c0392b", doc:"#2b579a", docx:"#2b579a", ppt:"#c43e1c", pptx:"#c43e1c",
+    xls:"#217346", xlsx:"#217346", csv:"#217346", zip:"#6b4fa0", rar:"#6b4fa0",
+    r:"#276dc3", do:"#1a5276", py:"#3572a5", ipynb:"#e46e2e", m:"#e37933",
+    txt:"#5b6b80", md:"#5b6b80", png:"#8e44ad", jpg:"#8e44ad", jpeg:"#8e44ad"
+  };
+  function ext(name){ const p = name.split("."); return p.length>1 ? p.pop().toLowerCase() : ""; }
+  function colorFor(e){ return COLORS[e] || "#4a5a70"; }
+
+  function esc(s){ return s.replace(/[&<>"]/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c])); }
+
+  /* --- Render de cada curso --- */
+  const container = document.getElementById("courses");
+  const registries = []; // {course, liNodes:[{name, node}]}
+
+  C.COURSES.forEach(course=>{
+    const sec = document.createElement("section");
+    sec.className = "course";
+    sec.innerHTML =
+      '<div class="head">'
+      + '<span class="count" data-count></span>'
+      + '<span class="tag">Asignatura</span>'
+      + '<h2>' + esc(course.name) + '</h2>'
+      + '<p class="desc">' + esc(course.desc) + '</p>'
+      + '</div>'
+      + '<div data-body><div class="state"><span class="spinner"></span>Cargando material…</div></div>';
+    container.appendChild(sec);
+    loadCourse(course, sec);
+  });
+
+  function loadCourse(course, sec){
+    const body = sec.querySelector("[data-body]");
+    const countEl = sec.querySelector("[data-count]");
+
+    if (!REPO){
+      body.innerHTML = '<div class="state empty"><span class="emoji">💡</span><div>'
+        + 'Vista previa local. El listado de archivos aparecerá automáticamente cuando el sitio '
+        + 'esté publicado en GitHub Pages.</div></div>';
+      return;
+    }
+
+    const api = "https://api.github.com/repos/" + REPO.owner + "/" + REPO.repo
+              + "/contents/" + course.path + "?ref=" + encodeURIComponent(C.BRANCH);
+
+    fetch(api, { headers:{ "Accept":"application/vnd.github.v3+json" } })
+      .then(r=>{
+        if (r.status === 404) return "__EMPTY__";
+        if (r.status === 403) throw new Error("rate");
+        if (!r.ok) throw new Error("http " + r.status);
+        return r.json();
+      })
+      .then(data=>{
+        if (data === "__EMPTY__"){ renderEmpty(); return; }
+        const files = (Array.isArray(data) ? data : [])
+          .filter(f=>f.type === "file" && f.name !== ".gitkeep")
+          .sort((a,b)=>a.name.localeCompare(b.name, "es", {numeric:true}));
+
+        if (!files.length){ renderEmpty(); return; }
+
+        countEl.textContent = files.length + (files.length===1 ? " archivo" : " archivos");
+        const ul = document.createElement("ul");
+        ul.className = "files";
+        const nodes = [];
+        files.forEach(f=>{
+          const e = ext(f.name);
+          const li = document.createElement("li");
+          li.innerHTML =
+            '<span class="fic" style="background:'+colorFor(e)+'">'+(e? esc(e.slice(0,4)):"FILE")+'</span>'
+            + '<div class="finfo">'
+            +   '<div class="fname">'+esc(f.name)+'</div>'
+            +   '<div class="fmeta">'+fmtSize(f.size)+'</div>'
+            + '</div>'
+            + '<a class="dl" href="'+f.download_url+'" download>'
+            +   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M5 21h14"/></svg>Descargar</a>';
+          ul.appendChild(li);
+          nodes.push({ name:f.name.toLowerCase(), node:li });
+        });
+        body.innerHTML = "";
+        body.appendChild(ul);
+        registries.push({ node: sec, liNodes: nodes });
+      })
+      .catch(err=>{
+        if (err.message === "rate"){
+          body.innerHTML = '<div class="state error">GitHub limitó temporalmente las consultas anónimas '
+            + '(máx. 60 por hora). Espera unos minutos y recarga la página.</div>';
+        } else {
+          body.innerHTML = '<div class="state error">No se pudo cargar el material. '
+            + 'Verifica que el repositorio y la carpeta <code>'+esc(course.path)+'</code> existan. '
+            + '(' + esc(err.message) + ')</div>';
+        }
+      });
+
+    function renderEmpty(){
+      countEl.textContent = "0 archivos";
+      body.innerHTML = '<div class="state empty"><span class="emoji">📂</span><div>'
+        + 'Aún no hay material publicado para este curso. Vuelve a revisar pronto.'
+        + '</div></div>';
+    }
+  }
+
+  /* --- Buscador --- */
+  const search = document.getElementById("search");
+  search.addEventListener("input", ()=>{
+    const q = search.value.trim().toLowerCase();
+    registries.forEach(reg=>{
+      let visible = 0;
+      reg.liNodes.forEach(item=>{
+        const show = !q || item.name.includes(q);
+        item.node.classList.toggle("hidden", !show);
+        if (show) visible++;
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
