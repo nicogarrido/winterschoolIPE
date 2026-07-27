@@ -1,0 +1,14 @@
+title: UNAB Winter School in Economics
+email: winter.school@unab.cl
+description: Courses, schedule, faculty and materials for the UNAB Winter School in Economics.
+baseurl: ""
+url: ""
+markdown: kramdown
+theme: minima
+header_pages:
+  - schedule.md
+  - courses.md
+  - faculty.md
+  - materials.md
+  - preparation.md
+  - about.md
